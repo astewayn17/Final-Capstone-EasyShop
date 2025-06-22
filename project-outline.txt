@@ -1,0 +1,39 @@
+Bugs
+    ProductsController Class (minor)
+        Bug 1 - Users say the search is returning incorrect results - fix the search logic
+        Bug 2 - Some products seem to be duplicated - ex: a laptop listed 3 times looks to be the same
+                except for some light differences. It seems that each time the laptop was updated, it 
+                instead created two more. This needs to be fixed to admins can safely update products.
+    CategoriesController Class (major) (Only ADMIN role alllowed to modify)
+        Implement the code and add the correct annotations: use the ProductsController for reference.
+    Unit Tests - To verify the bugs are fixed and the Categories/ProductsController classes function.
+    Postman - To verify the API are functional. 
+
+New Features (Optional)
+    1. Shopping Cart
+        Database already has shopping cart table.
+        Should only be available to users that are logged in.
+        When an item gets added, it should remain for that user when they log back in.
+        ShoppingCartController class is already added but need to add methods for REST actions.
+        Look at PDF for the specific REST method requirements.
+    2. User Profile
+        When a user registers for an account, a profile is created in the profile table. 
+        They should be able to view and update the profile.
+        Need to create a ProfileController class and add Get and Put methods.
+        Profile/MySqlProfileDao exist - used to create a profile when a user registers.
+        Need to update the DAO to add getByUserId and update methods.
+    3. Checkout
+        Will need significant planning since no code for this is provided.
+        Create an OrdersController class that has a post REST method.
+            - The POST method does not require a body. The method should retrieve
+              the current user's shopping cart. It should create and insert a new 
+              Order into the orders table, thenc reate an OrderLineItem for each 
+              shopping cart item and add each item to the database. 
+        Once the order is created, the shopping cart should be cleared.
+
+Demo
+    - Front-end application
+    - Postman scripts
+    - Show the new features in the code
+    - ReadMe
+    - Interesting piece of code (maybe a unit test)
