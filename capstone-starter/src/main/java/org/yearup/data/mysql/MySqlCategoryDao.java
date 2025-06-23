@@ -3,11 +3,9 @@ package org.yearup.data.mysql;
 import org.springframework.stereotype.Component;
 import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
-import org.yearup.models.Product;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         super(dataSource);
     }
 
-    ///
+    /// This is the method to get all categories. It stores them as objects in a list after querying each.
     @Override
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
@@ -36,7 +34,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         return categories;
     }
 
-    ///
+    /// This is the method to get a single category with the sql query using a 'where'.
     @Override
     public Category getById(int categoryId) {
         String sql = "SELECT * FROM categories WHERE category_id = ?";
@@ -53,7 +51,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         return null;
     }
 
-    ///
+    /// This will create a new category using the insert into query.
     @Override
     public Category create(Category category) {
         String sql = "INSERT INTO categories(name, description) VALUES (?, ?);";
@@ -77,7 +75,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         return null;
     }
 
-    ///
+    /// This will update (put) an existing category with a 'where' filter on the category id.
     @Override
     public void update(int categoryId, Category category) {
         String sql = "UPDATE categories SET name = ?, description = ? WHERE category_id = ?;";
@@ -92,7 +90,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         }
     }
 
-    ///
+    /// This is a simple delete method that will remove a category option.
     @Override
     public void delete(int categoryId) {
         String sql = "DELETE FROM categories WHERE category_id = ?;";
@@ -105,6 +103,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         }
     }
 
+    /// This is a helper method that will create category objects for the methods above
     private Category mapRow(ResultSet row) throws SQLException {
         int categoryId = row.getInt("category_id");
         String name = row.getString("name");
@@ -118,33 +117,3 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         return category;
     }
 }
-
-//
-//@Override
-//public void delete(int productId) {
-//    String sql = "DELETE FROM products " +
-//            " WHERE product_id = ?;";
-//
-//    try (Connection connection = getConnection()) {
-//        PreparedStatement statement = connection.prepareStatement(sql);
-//        statement.setInt(1, productId);
-//
-//        statement.executeUpdate();
-//    } catch (SQLException e) {
-//        throw new RuntimeException(e);
-//    }
-//}
-//
-//protected static Product mapRow(ResultSet row) throws SQLException {
-//    int productId = row.getInt("product_id");
-//    String name = row.getString("name");
-//    BigDecimal price = row.getBigDecimal("price");
-//    int categoryId = row.getInt("category_id");
-//    String description = row.getString("description");
-//    String color = row.getString("color");
-//    int stock = row.getInt("stock");
-//    boolean isFeatured = row.getBoolean("featured");
-//    String imageUrl = row.getString("image_url");
-//
-//    return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl);
-//}
