@@ -80,14 +80,33 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     ///
     @Override
     public void update(int categoryId, Category category) {
-        // update category
+        String sql = "UPDATE categories SET name = ?, description = ? WHERE category_id = ?;";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, category.getName());
+            statement.setString(2, category.getDescription());
+            statement.setInt(3, categoryId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     ///
     @Override
     public void delete(int categoryId) {
-        // delete category
-    }
+        //    String sql = "DELETE FROM products " +
+//            " WHERE product_id = ?;";
+//
+//    try (Connection connection = getConnection()) {
+//        PreparedStatement statement = connection.prepareStatement(sql);
+//        statement.setInt(1, productId);
+//
+//        statement.executeUpdate();
+//    } catch (SQLException e) {
+//        throw new RuntimeException(e);
+//    }
+//}
 
     private Category mapRow(ResultSet row) throws SQLException {
         int categoryId = row.getInt("category_id");
@@ -103,72 +122,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 }
 
-//@Override
-//public Product create(Product product) {
-//    String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured) " +
-//            " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-//
-//    try (Connection connection = getConnection()) {
-//        PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-//        statement.setString(1, product.getName());
-//        statement.setBigDecimal(2, product.getPrice());
-//        statement.setInt(3, product.getCategoryId());
-//        statement.setString(4, product.getDescription());
-//        statement.setString(5, product.getColor());
-//        statement.setString(6, product.getImageUrl());
-//        statement.setInt(7, product.getStock());
-//        statement.setBoolean(8, product.isFeatured());
-//
-//        int rowsAffected = statement.executeUpdate();
-//
-//        if (rowsAffected > 0) {
-//            // Retrieve the generated keys
-//            ResultSet generatedKeys = statement.getGeneratedKeys();
-//
-//            if (generatedKeys.next()) {
-//                // Retrieve the auto-incremented ID
-//                int orderId = generatedKeys.getInt(1);
-//
-//                // get the newly inserted category
-//                return getById(orderId);
-//            }
-//        }
-//    } catch (SQLException e) {
-//        throw new RuntimeException(e);
-//    }
-//    return null;
-//}
-//
-//@Override
-//public void update(int productId, Product product) {
-//    String sql = "UPDATE products" +
-//            " SET name = ? " +
-//            "   , price = ? " +
-//            "   , category_id = ? " +
-//            "   , description = ? " +
-//            "   , color = ? " +
-//            "   , image_url = ? " +
-//            "   , stock = ? " +
-//            "   , featured = ? " +
-//            " WHERE product_id = ?;";
-//
-//    try (Connection connection = getConnection()) {
-//        PreparedStatement statement = connection.prepareStatement(sql);
-//        statement.setString(1, product.getName());
-//        statement.setBigDecimal(2, product.getPrice());
-//        statement.setInt(3, product.getCategoryId());
-//        statement.setString(4, product.getDescription());
-//        statement.setString(5, product.getColor());
-//        statement.setString(6, product.getImageUrl());
-//        statement.setInt(7, product.getStock());
-//        statement.setBoolean(8, product.isFeatured());
-//        statement.setInt(9, productId);
-//
-//        statement.executeUpdate();
-//    } catch (SQLException e) {
-//        throw new RuntimeException(e);
-//    }
-//}
 //
 //@Override
 //public void delete(int productId) {
