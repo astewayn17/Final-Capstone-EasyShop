@@ -52,7 +52,6 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return products;
     }
 

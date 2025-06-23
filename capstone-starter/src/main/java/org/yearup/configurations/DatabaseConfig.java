@@ -7,25 +7,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DatabaseConfig
-{
+public class DatabaseConfig {
+
+    // Property to be used for BasicDataSource
     private BasicDataSource basicDataSource;
 
+    // Defines the datasource object to be a bean to be managed by spring.
     @Bean
-    public BasicDataSource dataSource()
-    {
+    public BasicDataSource dataSource() {
         return basicDataSource;
     }
 
+    // Constructs the DatabaseConfig with injected database configuration properties
     @Autowired
     public DatabaseConfig(@Value("${datasource.url}") String url,
                           @Value("${datasource.username}") String username,
-                          @Value("${datasource.password}") String password)
-    {
+                          @Value("${datasource.password}") String password) {
         basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(url);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
     }
-
 }

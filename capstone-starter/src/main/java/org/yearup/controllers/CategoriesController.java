@@ -56,8 +56,7 @@ public class CategoriesController {
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteCategory(@PathVariable int id)
-    {
+    public void deleteCategory(@PathVariable int id) {
         categoryDao.delete(id);
     }
 }
