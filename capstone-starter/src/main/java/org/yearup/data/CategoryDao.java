@@ -4,8 +4,9 @@ import org.yearup.models.Category;
 
 import java.util.List;
 
-public interface CategoryDao
-{
+// Data Access Object (DAO) interface for managing categories.
+// Provides methods to create, retrieve, update, and delete category records.
+public interface CategoryDao {
     List<Category> getAllCategories();
     Category getById(int categoryId);
     Category create(Category category);

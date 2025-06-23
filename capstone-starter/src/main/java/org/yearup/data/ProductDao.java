@@ -1,10 +1,11 @@
 package org.yearup.data;
 
 import org.yearup.models.Product;
-
 import java.math.BigDecimal;
 import java.util.List;
 
+// Data Access Object (DAO) interface for managing products.
+// Provides methods to search, retrieve, update, and delete category records.
 public interface ProductDao {
     List<Product> search(Integer categoryId, BigDecimal minPrice, BigDecimal maxPrice, String color);
     List<Product> listByCategoryId(int categoryId);
