@@ -21,12 +21,9 @@ import java.util.stream.Collectors;
 public class UserModelDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(UserModelDetailsService.class);
-
     private final UserDao userDao;
 
-    public UserModelDetailsService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    public UserModelDetailsService(UserDao userDao) { this.userDao = userDao; }
 
     @Override
     public UserDetails loadUserByUsername(final String login) {
@@ -47,4 +44,3 @@ public class UserModelDetailsService implements UserDetailsService {
                 grantedAuthorities);
     }
 }
-

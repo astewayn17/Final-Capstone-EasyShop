@@ -13,9 +13,7 @@ public class SecurityUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(SecurityUtils.class);
 
-    private SecurityUtils() {
-    }
-
+    private SecurityUtils() {}
     /**
      * Get the login of the current user.
      *
@@ -23,12 +21,10 @@ public class SecurityUtils {
      */
     public static Optional<String> getCurrentUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication == null) {
             LOG.debug("no authentication context found");
             return Optional.empty();
         }
-
         String username = null;
         if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
             username = springSecurityUser.getUsername();
