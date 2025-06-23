@@ -1,70 +1,116 @@
 package org.yearup.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-// add the annotations to make this a REST controller
-// add the annotation to make this controller the endpoint for the following url
-    // http://localhost:8080/categories
-// add annotation to allow cross site origin requests
-public class CategoriesController
-{
+@RestController
+@RequestMapping("categories")
+@CrossOrigin
+public class CategoriesController {
+
     private CategoryDao categoryDao;
     private ProductDao productDao;
 
-
-    // create an Autowired controller to inject the categoryDao and ProductDao
-
-    // add the appropriate annotation for a get action
-    public List<Category> getAll()
-    {
-        // find and return all categories
-        return null;
+    @Autowired
+    public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
+        this.categoryDao = categoryDao;
+        this.productDao = productDao;
     }
 
-    // add the appropriate annotation for a get action
-    public Category getById(@PathVariable int id)
-    {
-        // get the category by id
-        return null;
+    @GetMapping
+    public List<Category> getAll() {
+        return categoryDao.getAllCategories();
     }
 
-    // the url to return all products in category 1 would look like this
-    // https://localhost:8080/categories/1/products
+    @GetMapping("{id}")
+    public Category getById(@PathVariable int id) {
+        return categoryDao.getById(id);
+    }
+
     @GetMapping("{categoryId}/products")
-    public List<Product> getProductsById(@PathVariable int categoryId)
-    {
-        // get a list of product by categoryId
-        return null;
+    public List<Product> getProductsById(@PathVariable int categoryId) {
+        return productDao.listByCategoryId(categoryId);
     }
 
-    // add annotation to call this method for a POST action
-    // add annotation to ensure that only an ADMIN can call this function
-    public Category addCategory(@RequestBody Category category)
-    {
-        // insert the category
-        return null;
+    @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Category addCategory(@RequestBody Category category) {
+        return categoryDao.create(category);
     }
 
-    // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
-    // add annotation to ensure that only an ADMIN can call this function
-    public void updateCategory(@PathVariable int id, @RequestBody Category category)
-    {
-        // update the category by id
+    @PutMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void updateCategory(@PathVariable int id, @RequestBody Category category) {
+        categoryDao.update(id, category);
     }
 
-
-    // add annotation to call this method for a DELETE action - the url path must include the categoryId
-    // add annotation to ensure that only an ADMIN can call this function
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteCategory(@PathVariable int id)
     {
-        // delete the category by id
+        categoryDao.delete(id);
     }
 }
+
+//
+//        @GetMapping("{id}")
+//        @PreAuthorize("permitAll()")
+//        public Product getById(@PathVariable int id ) {
+//            try {
+//                var product = productDao.getById(id);
+//
+//                if(product == null)
+//                    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//
+//                return product;
+//            } catch(Exception ex) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//            }
+//        }
+//
+//        @PostMapping()
+//        @PreAuthorize("hasRole('ROLE_ADMIN')")
+//        public Product addProduct(@RequestBody Product product) {
+//            try {
+//                return productDao.create(product);
+//            } catch(Exception ex) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//            }
+//        }
+//
+//        @PutMapping("{id}")
+//        @PreAuthorize("hasRole('ROLE_ADMIN')")
+//        public void updateProduct(@PathVariable int id, @RequestBody Product product) {
+//            try {
+//                /// This was the main issue with the REST api failing to update an existing product.
+//                /// It was instead creating a new product because it used the create() method.
+//                productDao.update(id, product);
+//            } catch(Exception ex) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//            }
+//        }
+//
+//        @DeleteMapping("{id}")
+//        @PreAuthorize("hasRole('ROLE_ADMIN')")
+//        public void deleteProduct(@PathVariable int id) {
+//            try {
+//                var product = productDao.getById(id);
+//
+//                if(product == null)
+//                    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//
+//                productDao.delete(id);
+//            } catch(Exception ex) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//            }
+//        }
