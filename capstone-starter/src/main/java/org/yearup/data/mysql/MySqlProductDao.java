@@ -13,14 +13,15 @@ import java.util.List;
 @Component
 public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
 
+    // Constructs a new MySqlProductDao using the provided DataSource
     public MySqlProductDao(DataSource dataSource) {
         super(dataSource);
     }
 
+    // Method that returns a list of products after filtering through with the search query.
     @Override
     public List<Product> search(Integer categoryId, BigDecimal minPrice, BigDecimal maxPrice, String color) {
         List<Product> products = new ArrayList<>();
-
         /// Modified this query to correct the maxPrice and minPrices. The min price was previously considered
         /// the max price and the min price was never included. This caused the price filtering to fail.
         String sql = "SELECT * FROM products " +
@@ -28,14 +29,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
                 "   AND (price >= ? OR ? = -1) " +
                 "   AND (price <= ? OR ? = -1) " +
                 "   AND (color = ? OR ? = '') ";
-
         categoryId = categoryId == null ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
         maxPrice = maxPrice == null ? new BigDecimal("-1") : maxPrice;
         color = color == null ? "" : color;
-
         try (Connection connection = getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
             statement.setInt(2, categoryId);
@@ -46,9 +44,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
             statement.setBigDecimal(6, maxPrice);
             statement.setString(7, color);
             statement.setString(8, color);
-
             ResultSet row = statement.executeQuery();
-
             while (row.next()) {
                 Product product = mapRow(row);
                 products.add(product);
@@ -60,19 +56,15 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         return products;
     }
 
+    // Method that will return a list of products based on category ID
     @Override
     public List<Product> listByCategoryId(int categoryId) {
         List<Product> products = new ArrayList<>();
-
-        String sql = "SELECT * FROM products " +
-                    " WHERE category_id = ? ";
-
+        String sql = "SELECT * FROM products WHERE category_id = ? ";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
-
             ResultSet row = statement.executeQuery();
-
             while (row.next()) {
                 Product product = mapRow(row);
                 products.add(product);
@@ -80,19 +72,17 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return products;
     }
 
+    // Method that will return a product object based on the product ID
     @Override
     public Product getById(int productId) {
         String sql = "SELECT * FROM products WHERE product_id = ?";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
-
             ResultSet row = statement.executeQuery();
-
             if (row.next()) {
                 return mapRow(row);
             }
@@ -102,11 +92,11 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         return null;
     }
 
+    // A method that will create (post) a product using the insert into query
     @Override
     public Product create(Product product) {
         String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, product.getName());
@@ -117,17 +107,13 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
             statement.setString(6, product.getImageUrl());
             statement.setInt(7, product.getStock());
             statement.setBoolean(8, product.isFeatured());
-
             int rowsAffected = statement.executeUpdate();
-
             if (rowsAffected > 0) {
                 // Retrieve the generated keys
                 try(ResultSet generatedKeys = statement.getGeneratedKeys()) {
-
                     if (generatedKeys.next()) {
                         // Retrieve the auto-incremented ID
                         int orderId = generatedKeys.getInt(1);
-
                         return getById(orderId);
                     }
                 }
@@ -138,6 +124,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         return null;
     }
 
+    // Method that will update (put) a product object
     @Override
     public void update(int productId, Product product) {
         String sql = "UPDATE products" +
@@ -150,7 +137,6 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
                 "   , stock = ? " +
                 "   , featured = ? " +
                 " WHERE product_id = ?;";
-
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, product.getName());
@@ -162,28 +148,26 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
             statement.setInt(7, product.getStock());
             statement.setBoolean(8, product.isFeatured());
             statement.setInt(9, productId);
-
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // Method that will delete a product object by simple using the product id
     @Override
     public void delete(int productId) {
-        String sql = "DELETE FROM products " +
-                " WHERE product_id = ?;";
-
+        String sql = "DELETE FROM products WHERE product_id = ?;";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
-
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // This is a helper method that will create product objects for the methods above
     protected static Product mapRow(ResultSet row) throws SQLException {
         int productId = row.getInt("product_id");
         String name = row.getString("name");
@@ -194,7 +178,6 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao {
         int stock = row.getInt("stock");
         boolean isFeatured = row.getBoolean("featured");
         String imageUrl = row.getString("image_url");
-
         return new Product(productId, name, price, categoryId, description, color, stock, isFeatured, imageUrl);
     }
 }
