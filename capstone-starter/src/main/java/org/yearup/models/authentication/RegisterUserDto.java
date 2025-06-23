@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
  */
 public class RegisterUserDto {
 
+    // The username chosen by the user. Not allowed to be empty
     @NotEmpty
     private String username;
     @NotEmpty
@@ -18,34 +19,42 @@ public class RegisterUserDto {
     @NotEmpty(message = "Please select a role for this user.")
     private String role;
 
+    // Method to get the username
     public String getUsername() {
         return username;
     }
 
+    // Method to set the username
     public void setUsername(String username) {
         this.username = username;
     }
 
+    // Method to get the password
     public String getPassword() {
         return password;
     }
 
+    // Method to set the password
     public void setPassword(String password) {
         this.password = password;
     }
 
+    // Method to get the confirmed password
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
+    // Method to set the confirmed password
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
+    // Method to get the role
     public String getRole() {
         return role;
     }
 
+    // Method to set the role
     public void setRole(String role) {
         this.role = role;
     }

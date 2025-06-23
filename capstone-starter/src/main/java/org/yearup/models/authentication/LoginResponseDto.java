@@ -11,28 +11,34 @@ import org.yearup.models.User;
  */
 public class LoginResponseDto {
 
+    // Properties that make up a login response
     private String token;
     private User user;
 
+    // Injected constructor
     public LoginResponseDto(String token, User user) {
         this.token = token;
         this.user = user;
     }
 
+    // Gets the authentication token for the logged-in user
     @JsonProperty("token")
     String getToken() {
         return token;
     }
 
+    // Setter for the token
     void setToken(String token) {
         this.token = token;
     }
 
+    // Gets the user object associated with the login response
     @JsonProperty("user")
     public User getUser() {
         return user;
     }
 
+    // Setter for the user based on the login response
     public void setUser(User user) {
         this.user = user;
     }
