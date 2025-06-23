@@ -28,11 +28,13 @@ import org.yearup.security.jwt.TokenProvider;
 @PreAuthorize("permitAll()")
 public class AuthenticationController {
 
+    // Class properties
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private UserDao userDao;
     private ProfileDao profileDao;
 
+    // Constructs an AuthenticationController with required dependencies for handling user authentication
     public AuthenticationController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao, ProfileDao profileDao) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -40,59 +42,48 @@ public class AuthenticationController {
         this.profileDao = profileDao;
     }
 
+    // Handles user login requests and authenticates the user using the provided credentials.
+    // If successful, it generates a JWT token and returns it along with the authenticated user's
+    // data in the response.
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, false);
-
-        try
-        {
+        try {
             User user = userDao.getByUserName(loginDto.getUsername());
-
             if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
             return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
 
+    // This method handles user registration. It accepts user registration data, check for an existing username,
+    // and creates a new user and profile for them.
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto newUser) {
-
-        try
-        {
+        try {
             boolean exists = userDao.exists(newUser.getUsername());
-            if (exists)
-            {
+            if (exists) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
             }
-
             // create user
             User user = userDao.create(new User(0, newUser.getUsername(), newUser.getPassword(), newUser.getRole()));
-
             // create profile
             Profile profile = new Profile();
             profile.setUserId(user.getId());
             profileDao.create(profile);
-
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
-
 }
-

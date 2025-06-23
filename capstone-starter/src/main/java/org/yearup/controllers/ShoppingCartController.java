@@ -11,32 +11,25 @@ import org.yearup.models.User;
 import java.security.Principal;
 
 // convert this class to a REST controller
-// only logged in users should have access to these actions
-public class ShoppingCartController
-{
+// only logged-in users should have access to these actions
+public class ShoppingCartController {
+
     // a shopping cart requires
     private ShoppingCartDao shoppingCartDao;
     private UserDao userDao;
     private ProductDao productDao;
 
-
-
     // each method in this controller requires a Principal object as a parameter
-    public ShoppingCart getCart(Principal principal)
-    {
-        try
-        {
-            // get the currently logged in username
+    public ShoppingCart getCart(Principal principal) {
+        try {
+            // get the currently logged-in username
             String userName = principal.getName();
             // find database user by userId
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
-
             // use the shoppingcartDao to get all items in the cart and return the cart
             return null;
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
@@ -52,5 +45,4 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart
-
 }
