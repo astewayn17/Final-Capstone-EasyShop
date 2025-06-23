@@ -18,10 +18,11 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         super(dataSource);
     }
 
+    ///
     @Override
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
-        String sql = "SELECT category_id, name FROM Categories";
+        String sql = "SELECT * FROM Categories";
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet row = statement.executeQuery()) {
@@ -35,35 +36,54 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         return categories;
     }
 
+    ///
     @Override
     public Category getById(int categoryId) {
-        List<Category> categories = new ArrayList<>();
-        String sql = "SELECT * FROM products WHERE category_id = ?";
+        String sql = "SELECT * FROM categories WHERE category_id = ?";
         try (Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, categoryId);
             ResultSet row = statement.executeQuery();
-            while (row.next()) {
-                Category category = mapRow(row);
-                categories.add(category);
+            if (row.next()) {
+                return mapRow(row);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return category;
-    }
-
-    @Override
-    public Category create(Category category) {
-        // create a new category
         return null;
     }
 
+    ///
+    @Override
+    public Category create(Category category) {
+        String sql = "INSERT INTO categories(name, description) VALUES (?, ?);";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, category.getName());
+            statement.setString(2, category.getDescription());
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                // In this case, another try with resources is needed to handle the get generated keys ResultSet
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int categoryId = generatedKeys.getInt(1);
+                        return getById(categoryId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    ///
     @Override
     public void update(int categoryId, Category category) {
         // update category
     }
 
+    ///
     @Override
     public void delete(int categoryId) {
         // delete category
@@ -83,48 +103,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     }
 }
 
-//@Override
-//public List<Product> listByCategoryId(int categoryId) {
-//    List<Product> products = new ArrayList<>();
-//
-//    String sql = "SELECT * FROM products " +
-//            " WHERE category_id = ? ";
-//
-//    try (Connection connection = getConnection()) {
-//        PreparedStatement statement = connection.prepareStatement(sql);
-//        statement.setInt(1, categoryId);
-//
-//        ResultSet row = statement.executeQuery();
-//
-//        while (row.next()) {
-//            Product product = mapRow(row);
-//            products.add(product);
-//        }
-//    } catch (SQLException e) {
-//        throw new RuntimeException(e);
-//    }
-//
-//    return products;
-//}
-//
-//@Override
-//public Product getById(int productId) {
-//    String sql = "SELECT * FROM products WHERE product_id = ?";
-//    try (Connection connection = getConnection()) {
-//        PreparedStatement statement = connection.prepareStatement(sql);
-//        statement.setInt(1, productId);
-//
-//        ResultSet row = statement.executeQuery();
-//
-//        if (row.next()) {
-//            return mapRow(row);
-//        }
-//    } catch (SQLException e) {
-//        throw new RuntimeException(e);
-//    }
-//    return null;
-//}
-//
 //@Override
 //public Product create(Product product) {
 //    String sql = "INSERT INTO products(name, price, category_id, description, color, image_url, stock, featured) " +
