@@ -50,5 +50,34 @@ public class ShoppingCartController {
         }
     }
 
-
+    // Add a POST method to add a product to the cart - the url should be
+    // https://localhost:8080/cart/products/15 (15 is the productId to be added
+    @PostMapping("/products/{productId}")
+    public ShoppingCart addToCart(Principal principal, @PathVariable int productId) {
+        try {
+            String userName = principal.getName();
+            User user = userDao.getByUserName(userName);
+            int userId = user.getId();
+            // Check if product exists
+            Product product = productDao.getById(productId);
+            if (product == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+            }
+            // Check if item already exists in cart
+            if (shoppingCartDao.itemExists(userId, productId)) {
+                // Get current quantity and increment by 1
+                int currentQuantity = shoppingCartDao.getItemQuantity(userId, productId);
+                shoppingCartDao.updateItemInCart(userId, productId, currentQuantity + 1);
+            } else {
+                // Add new item with quantity 1
+                shoppingCartDao.addItemToCart(userId, productId, 1);
+            }
+            // Return the updated cart
+            return shoppingCartDao.getByUserId(userId);
+        } catch(ResponseStatusException e) {
+            throw e;
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
 }
