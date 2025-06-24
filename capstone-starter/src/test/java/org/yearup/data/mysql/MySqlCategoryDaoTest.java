@@ -44,6 +44,15 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
 
     @Test
     public void create_should_makeANewCategory() {
+        // Arrange
+        MySqlCategoryDao categoryDao = new MySqlCategoryDao(dataSource);
+        Category newCategory = new Category(4, "Auto", "Car accessories and parts");
 
+        // Act
+        categoryDao.create(newCategory);
+        Category result = categoryDao.getById(4);
+
+        // Assert
+        assertEquals("Auto", result.getName());
     }
 }
