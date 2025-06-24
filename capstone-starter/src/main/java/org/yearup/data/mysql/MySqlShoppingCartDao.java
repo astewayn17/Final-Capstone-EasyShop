@@ -94,7 +94,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         }
     }
 
-    // Method to check if an item exists
+    // Method to check if an item exists with a count query
     @Override
     public boolean itemExists(int userId, int productId) {
         String sql = "SELECT COUNT(*) FROM shopping_cart WHERE user_id = ? AND product_id = ?";
@@ -110,5 +110,23 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
             throw new RuntimeException(e);
         }
         return false;
+    }
+
+    // Gets the amount of items in a cart with a sql query for quantity
+    @Override
+    public int getItemQuantity(int userId, int productId) {
+        String sql = "SELECT quantity FROM shopping_cart WHERE user_id = ? AND product_id = ?";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.setInt(2, productId);
+            ResultSet row = statement.executeQuery();
+            if (row.next()) {
+                return row.getInt("quantity");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 }
