@@ -66,5 +66,20 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         }
     }
 
+    // Method to query the database and update an existing item in the cart
+    @Override
+    public void updateItemInCart(int userId, int productId, int quantity) {
+        String sql = "UPDATE shopping_cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, quantity);
+            statement.setInt(2, userId);
+            statement.setInt(3, productId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
