@@ -80,4 +80,28 @@ public class ShoppingCartController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
+    // Add a PUT method to update an existing product in the cart - the url should be
+    // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
+    // The BODY should be a ShoppingCartItem - quantity is the only value that will be updated
+    @PutMapping("/products/{productId}")
+    public ShoppingCart updateCartItem(Principal principal, @PathVariable int productId, @RequestBody ShoppingCartItem item) {
+        try {
+            String userName = principal.getName();
+            User user = userDao.getByUserName(userName);
+            int userId = user.getId();
+            // Check if item exists in user's cart
+            if (!shoppingCartDao.itemExists(userId, productId)) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not in cart");
+            }
+            // Update the quantity
+            shoppingCartDao.updateItemInCart(userId, productId, item.getQuantity());
+            // Return the updated cart
+            return shoppingCartDao.getByUserId(userId);
+        } catch(ResponseStatusException e) {
+            throw e;
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
 }
