@@ -15,7 +15,7 @@ import java.util.List;
 // Request mapping gives the general url directory for categories since all methods are pertaining to that.
 // CrossOrigin Allows cross-origin requests for the front end
 @RestController
-@RequestMapping("categories")
+@RequestMapping("/categories")
 @CrossOrigin
 public class CategoriesController {
 
@@ -38,14 +38,14 @@ public class CategoriesController {
     }
 
     // Method to get a single category based on ID
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id) {
         return categoryDao.getById(id);
     }
 
     // Method to get all products that are in a single category
-    @GetMapping("{categoryId}/products")
+    @GetMapping("/{categoryId}/products")
     @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId) {
         return productDao.listByCategoryId(categoryId);
@@ -59,14 +59,14 @@ public class CategoriesController {
     }
 
     // Method to update an existing category (requires ADMIN role)
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateCategory(@PathVariable int id, @RequestBody Category category) {
         categoryDao.update(id, category);
     }
 
     // Method to delete an existing category (requires ADMIN role)
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteCategory(@PathVariable int id) {
         categoryDao.delete(id);

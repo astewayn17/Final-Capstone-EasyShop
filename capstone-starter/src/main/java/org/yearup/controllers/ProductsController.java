@@ -15,7 +15,7 @@ import java.util.List;
 // Request mapping gives the general url directory for categories since all methods are pertaining to that.
 // CrossOrigin Allows cross-origin requests for the front end
 @RestController
-@RequestMapping("products")
+@RequestMapping("/products")
 @CrossOrigin
 public class ProductsController {
 
@@ -44,7 +44,7 @@ public class ProductsController {
     }
 
     // Method to get a single product based on ID
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id ) {
         try {
@@ -69,7 +69,7 @@ public class ProductsController {
     }
 
     // Method to update an existing product (requires ADMIN role)
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateProduct(@PathVariable int id, @RequestBody Product product) {
         try {
@@ -82,7 +82,7 @@ public class ProductsController {
     }
 
     // Method to delete an existing product (requires ADMIN role)
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteProduct(@PathVariable int id) {
         try {
