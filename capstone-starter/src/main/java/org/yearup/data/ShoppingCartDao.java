@@ -5,8 +5,9 @@ import org.yearup.models.ShoppingCart;
 // Data Access Object (DAO) interface for managing shopping cart data
 public interface ShoppingCartDao {
     ShoppingCart getByUserId(int userId);
-    void addItem(int userId, int productId, int quantity);
-    void updateItem(int userId, int productId, int quantity);
+    void addItemToCart(int userId, int productId, int quantity);
+    void updateItemInCart(int userId, int productId, int quantity);
     void clearCart(int userId);
     boolean itemExists(int userId, int productId);
+    int getItemQuantity(int userId, int productId);
 }
