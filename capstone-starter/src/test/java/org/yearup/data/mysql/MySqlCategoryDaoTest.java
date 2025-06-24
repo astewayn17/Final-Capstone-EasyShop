@@ -1,28 +1,44 @@
 package org.yearup.data.mysql;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.yearup.models.Category;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MySqlCategoryDaoTest {
+@SpringBootTest
+class MySqlCategoryDaoTest extends BaseDaoTestClass {
 
     @Test
-    void getAllCategories() {
+    public void getAllCategories_should_getAllCategoryNames() {
+        // Arrange
+        MySqlCategoryDao dao = new MySqlCategoryDao(dataSource);
+
+        // Act - Puts categories into a list and gets names from them using the stream loop
+        List<Category> categories = dao.getAllCategories();
+        List<String> names = categories.stream()
+                .map(Category::getName)
+                .toList();
+
+        // Assert
+        assertTrue(names.containsAll(List.of("Electronics", "Fashion", "Home & Kitchen")));
     }
 
     @Test
-    void getById() {
+    public void getById_should_getProductByCategoryId() {
     }
 
     @Test
-    void create() {
+    public void create_should_makeANewCategory() {
     }
 
     @Test
-    void update() {
+    public void update_should_changeAnExistingCategory() {
     }
 
     @Test
-    void delete() {
+    public void delete_should_removeAnExistingCategory() {
     }
 }

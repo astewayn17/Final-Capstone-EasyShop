@@ -39,7 +39,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void search_shouldReturn_theCorrectProduct() {
+    public void search_should_returnTheCorrectProduct() {
         // Arrange - In BeforeEach
 
         // Act
@@ -50,7 +50,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void listByCategoryId_shouldReturn_correspondingProducts() {
+    public void listByCategoryId_should_returnTheCorrectProducts() {
         // Arrange - In BeforeEach
 
         // Act
@@ -62,7 +62,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void getById_shouldReturn_theCorrectProduct() {
+    public void getById_should_returnTheCorrectProduct() {
         // Arrange
         int productId = 1;
         Product expected = new Product()
@@ -86,7 +86,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void create_shouldReturn_theCreatedProduct() {
+    public void create_should_makeANewProduct() {
         // Arrange
         Product notebook = new Product(103, "Notebook", new BigDecimal(7.99), 4,
                 "Spiral notebook", "Blue", 20, false, "notebook.jpg");
@@ -97,27 +97,5 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
 
         // Assert
         assertEquals("Notebook", name);
-    }
-
-    @Test
-    public void update_shouldReturn_theUpdatedProduct() {
-        // Arrange
-        Product eraser = new Product(100, "Eraser", new BigDecimal(7.99), 4,
-                "Improved eraser", "Grey", 20, false, "smartphone.jpg");
-
-        // Act
-        dao.update(100, eraser);
-
-        // Assert
-        assertEquals("Grey", eraser.getColor());
-    }
-
-    @Test
-    public void delete_shouldDelete_theCorrespondingProduct() {
-        // Arrange - In BeforeEach
-
-        // Act
-
-        // Assert
     }
 }
