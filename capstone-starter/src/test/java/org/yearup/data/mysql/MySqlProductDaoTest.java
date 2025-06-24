@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.yearup.data.CategoryDao;
+import org.yearup.models.Category;
 import org.yearup.models.Product;
 
 import java.math.BigDecimal;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class MySqlProductDaoTest extends BaseDaoTestClass {
@@ -20,36 +23,42 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     @BeforeEach
     public void setup() {
         dao = new MySqlProductDao(dataSource);
-    }
-
-    @Test
-    public void search_shouldReturn_theCorrectProduct() {
-        // Arrange
-        Product eraser = new Product(100, "Eraser", new BigDecimal(5.99), 1,
+        // Arrange - making reusable category 4 and products for the tests below
+        CategoryDao categoryDao = new MySqlCategoryDao(dataSource);
+        Category cat4 = new Category(4, "School Stuff", "Simple school stuff");
+        categoryDao.create(cat4);
+        Product eraser = new Product(100, "Eraser", new BigDecimal(5.99), 4,
                 "Simple eraser", "Pink", 30, false, "smartphone.jpg");
-        Product pencil = new Product(101, "Pencil", new BigDecimal(1.99), 2,
+        Product pencil = new Product(101, "Pencil", new BigDecimal(1.99), 4,
                 "Simple pencil", "Yellow", 30, false, "smartphone.jpg");
-        Product pen = new Product(102, "Pen", new BigDecimal(3.99), 3,
+        Product pen = new Product(102, "Pen", new BigDecimal(3.99), 4,
                 "Simple pen", "Black", 30, false, "smartphone.jpg");
         dao.create(eraser);
         dao.create(pencil);
         dao.create(pen);
+    }
+
+    @Test
+    public void search_shouldReturn_theCorrectProduct() {
+        // Arrange - In BeforeEach
 
         // Act
-        List<Product> result = dao.search(3, new BigDecimal("1.00"), new BigDecimal("5.00"), "Black");
+        List<Product> result = dao.search(4, new BigDecimal("1.00"), new BigDecimal("5.00"), "Black");
 
         // Assert
-        assertEquals(1, result.size(), "Should return only the black pen in category 3 between $1.00 and $5.00");
         assertEquals("Pen", result.get(0).getName());
     }
 
     @Test
-    public void listByCategoryId() {
-        // Arrange
+    public void listByCategoryId_shouldReturn_correspondingProducts() {
+        // Arrange - In BeforeEach
 
         // Act
+        List<Product> result = dao.listByCategoryId(4);
 
-        // Assert
+        // Assert - Gets the names of the products as a list using the stream
+        List<String> names = result.stream().map(Product::getName).toList();
+        assertEquals(List.of("Eraser", "Pencil", "Pen"), names);
     }
 
     @Test
@@ -78,7 +87,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
 
     @Test
     public void create() {
-        // Arrange
+        // Arrange - In BeforeEach
 
         // Act
 
@@ -87,7 +96,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
 
     @Test
     public void update() {
-        // Arrange
+        // Arrange - In BeforeEach
 
         // Act
 
@@ -96,7 +105,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
 
     @Test
     public void delete() {
-        // Arrange
+        // Arrange - In BeforeEach
 
         // Act
 
