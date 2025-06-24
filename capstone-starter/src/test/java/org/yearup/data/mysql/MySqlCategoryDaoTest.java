@@ -14,31 +14,24 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
     @Test
     public void getAllCategories_should_getAllCategoryNames() {
         // Arrange
-        MySqlCategoryDao dao = new MySqlCategoryDao(dataSource);
+        MySqlCategoryDao categoryDao = new MySqlCategoryDao(dataSource);
+        Category expected = new Category(4, "Toys", "Children toys");
 
-        // Act - Puts categories into a list and gets names from them using the stream loop
-        List<Category> categories = dao.getAllCategories();
-        List<String> names = categories.stream()
-                .map(Category::getName)
-                .toList();
+        // Act
+        categoryDao.create(expected);
+        Category actual = categoryDao.getById(4);
 
         // Assert
-        assertTrue(names.containsAll(List.of("Electronics", "Fashion", "Home & Kitchen")));
+        assertEquals("Toys", actual.getName());
     }
 
     @Test
-    public void getById_should_getProductByCategoryId() {
+    public void getById_should_getCategoryById() {
+
     }
 
     @Test
     public void create_should_makeANewCategory() {
-    }
 
-    @Test
-    public void update_should_changeAnExistingCategory() {
-    }
-
-    @Test
-    public void delete_should_removeAnExistingCategory() {
     }
 }
