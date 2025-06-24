@@ -101,11 +101,15 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
 
     @Test
     public void update_shouldReturn_theUpdatedProduct() {
-        // Arrange - In BeforeEach
+        // Arrange
+        Product eraser = new Product(100, "Eraser", new BigDecimal(7.99), 4,
+                "Improved eraser", "Grey", 20, false, "smartphone.jpg");
 
         // Act
+        dao.update(100, eraser);
 
         // Assert
+        assertEquals("Grey", eraser.getColor());
     }
 
     @Test
