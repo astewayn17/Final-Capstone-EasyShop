@@ -86,7 +86,21 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void create() {
+    public void create_shouldReturn_theCreatedProduct() {
+        // Arrange
+        Product notebook = new Product(103, "Notebook", new BigDecimal(7.99), 4,
+                "Spiral notebook", "Blue", 20, false, "notebook.jpg");
+
+        // Act
+        dao.create(notebook);
+        String name = notebook.getName();
+
+        // Assert
+        assertEquals("Notebook", name);
+    }
+
+    @Test
+    public void update_shouldReturn_theUpdatedProduct() {
         // Arrange - In BeforeEach
 
         // Act
@@ -95,16 +109,7 @@ class MySqlProductDaoTest extends BaseDaoTestClass {
     }
 
     @Test
-    public void update() {
-        // Arrange - In BeforeEach
-
-        // Act
-
-        // Assert
-    }
-
-    @Test
-    public void delete() {
+    public void delete_shouldDelete_theCorrespondingProduct() {
         // Arrange - In BeforeEach
 
         // Act
