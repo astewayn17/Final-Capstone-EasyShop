@@ -74,8 +74,6 @@ public class ShoppingCartController {
             }
             // Return the updated cart
             return shoppingCartDao.getByUserId(userId);
-        } catch(ResponseStatusException e) {
-            throw e;
         } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
@@ -98,8 +96,6 @@ public class ShoppingCartController {
             shoppingCartDao.updateItemInCart(userId, productId, item.getQuantity());
             // Return the updated cart
             return shoppingCartDao.getByUserId(userId);
-        } catch(ResponseStatusException e) {
-            throw e;
         } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
