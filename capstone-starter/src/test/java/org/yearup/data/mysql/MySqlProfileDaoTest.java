@@ -21,7 +21,6 @@ class MySqlProfileDaoTest extends BaseDaoTestClass {
     public void getByUserId_should_returnTheCorrectProfile() {
         // Act
         Profile result = profileDao.getByUserId(1);
-
         // Assert
         assertNotNull(result);
     }
@@ -31,11 +30,9 @@ class MySqlProfileDaoTest extends BaseDaoTestClass {
         // Arrange
         Profile updatedProfile = new Profile();
         updatedProfile.setFirstName("UpdatedName");
-
         // Act
         profileDao.update(1, updatedProfile);
         Profile result = profileDao.getByUserId(1);
-
         // Assert
         assertEquals("UpdatedName", result.getFirstName());
     }
