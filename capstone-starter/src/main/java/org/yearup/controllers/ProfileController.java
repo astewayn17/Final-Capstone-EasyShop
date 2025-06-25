@@ -44,4 +44,25 @@ public class ProfileController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
+    // PUT update the profile for the current user
+    @PutMapping
+    public void updateProfile(Principal principal, @RequestBody Profile profile) {
+        try {
+            String userName = principal.getName();
+            User user = userDao.getByUserName(userName);
+            int userId = user.getId();
+            // Ensure the profile userId matches the authenticated user
+            // This prevents users from updating other users' profiles
+            profile.setUserId(userId);
+            // Check if profile exists
+            Profile existingProfile = profileDao.getByUserId(userId);
+            if (existingProfile == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not found");
+            }
+            profileDao.update(userId, profile);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
 }
