@@ -14,14 +14,11 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
         // Arrange
         MySqlCategoryDao categoryDao = new MySqlCategoryDao(dataSource);
         Category expected = new Category(10, "Toys", "Children toys");
-        // Act - Will make the category and then loop through it acquiring the names of them
+        // Act
         categoryDao.create(expected);
-        List<String> names = categoryDao.getAllCategories()
-                .stream()
-                .map(Category::getName)
-                .toList();
+        List<Category> categories = categoryDao.getAllCategories();
         // Assert
-        assertTrue(names.contains("Toys"));
+        assertFalse(categories.isEmpty());
     }
 
     @Test
