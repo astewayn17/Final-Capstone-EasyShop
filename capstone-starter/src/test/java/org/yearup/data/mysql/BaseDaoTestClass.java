@@ -7,9 +7,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.yearup.configuration.TestDatabaseConfig;
 
+import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestDatabaseConfig.class)

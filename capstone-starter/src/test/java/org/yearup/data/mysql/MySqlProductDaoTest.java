@@ -1,19 +1,16 @@
 package org.yearup.data.mysql;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.yearup.data.CategoryDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
-
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class MySqlProductDaoTest extends BaseDaoTestClass {
