@@ -26,7 +26,7 @@ public class ShoppingCartController {
     private UserDao userDao;
     private ProductDao productDao;
 
-    //
+    // Injected constructor
     @Autowired
     public ShoppingCartController(ShoppingCartDao shoppingCartDao, UserDao userDao, ProductDao productDao) {
         this.shoppingCartDao = shoppingCartDao;

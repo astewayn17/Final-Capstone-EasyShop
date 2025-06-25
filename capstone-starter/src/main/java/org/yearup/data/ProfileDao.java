@@ -6,4 +6,6 @@ import org.yearup.models.Profile;
 // Defines operations related to creating profile records in the database
 public interface ProfileDao {
     Profile create(Profile profile);
+    Profile getByUserId(int userId);
+    void update(int userId, Profile profile);
 }
