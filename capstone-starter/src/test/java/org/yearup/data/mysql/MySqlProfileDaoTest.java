@@ -17,6 +17,7 @@ class MySqlProfileDaoTest extends BaseDaoTestClass {
         profileDao = new MySqlProfileDao(dataSource);
     }
 
+    // Just checks if the profile exists
     @Test
     public void getByUserId_should_returnTheCorrectProfile() {
         // Act
@@ -25,6 +26,7 @@ class MySqlProfileDaoTest extends BaseDaoTestClass {
         assertNotNull(result);
     }
 
+    // Updating the first name of the profile for user ID 1
     @Test
     public void update_should_updateTheProfile() {
         // Arrange
