@@ -16,8 +16,7 @@ body {
     color: var(--text-primary);
 }
 
-header
-{
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,20 +27,19 @@ header
     box-shadow: 0 2px 5px var(--shadow-color);
 }
 
-header img
-{
+header img {
     height: 100%;
 }
 
-header div{
+header div {
     height: 100%;
     display: flex;
     align-items: flex-end;
 }
 
-header #links
-{
-    gap: 20px;
+header #links {
+    /* tightened up spacing between links */
+    gap: 10px;              /* was 20px */
     justify-content: flex-start;
     align-items: flex-end;
     padding-right: 20px;
@@ -50,14 +48,19 @@ header #links
 header #links a {
     color: var(--text-secondary);
     text-decoration: none;
+    font-size: 1.25rem;      /* unchanged */
+    padding: 0.5rem 1rem;     /* unchanged */
+    margin: 0 0.25rem;        /* was 0 0.5rem */
+    line-height: 1;
+    display: inline-block;
 }
 
-header #links a:hover {
+header #links a:hover,
+header #links a:focus {
     color: var(--text-primary);
 }
 
-header .cart
-{
+header .cart {
     font-size: x-large;
     padding-left: 10px;
     padding-right: 10px;
@@ -65,24 +68,21 @@ header .cart
     color: var(--text-primary);
 }
 
-header .cart #cart-items
-{
+header .cart #cart-items {
     font-size: .7em;
     height: 50%;
     align-items: start;
     padding-left: 5px;
 }
 
-main
-{
+main {
     display: grid;
     grid-template-columns: 350px auto;
     margin-top: 15px;
     height: 87vh;
 }
 
-main > .filter-box
-{
+main > .filter-box {
     width: 350px;
     padding: 15px;
     background-color: var(--secondary-bg);
@@ -93,8 +93,7 @@ main #min-price .slider-selection {
     background: var(--accent-color);
 }
 
-main > .content
-{
+main > .content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
@@ -103,8 +102,7 @@ main > .content
     background-color: var(--primary-bg);
 }
 
-main > .content-form
-{
+main > .content-form {
     display: flex;
     flex-direction: column;
     padding-right: 20px;
@@ -112,40 +110,34 @@ main > .content-form
 }
 
 main > .content-form .cart-header,
-main > .content-form .cart-item
-{
+main > .content-form .cart-item {
     border-bottom: solid 1px var(--border-color);
 }
 
-.content-form .photo
-{
+.content-form .photo {
     display: flex;
     gap: 10px;
 }
 
-.content-form .photo img
-{
+.content-form .photo img {
     width: 100px;
     cursor: pointer;
     border: solid 1px var(--border-color);
 }
 
-.content-form .cart-header
-{
+.content-form .cart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: var(--text-primary);
 }
 
-.content-form .cart-total
-{
+.content-form .cart-total {
     margin: 10px 0;
     color: var(--price-color);
 }
 
-.product
-{
+.product {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -162,33 +154,28 @@ main > .content-form .cart-item
     box-shadow: 0 2px 8px rgba(74, 124, 158, 0.3);
 }
 
-.product  .photo
-{
+.product .photo {
     display: flex;
     justify-content: space-between;
     padding: 0 10px 10px 10px;
 }
 
-.product  .photo > img
-{
+.product .photo > img {
     width: 33%;
     cursor: pointer;
     border: solid 1px var(--border-color);
 }
 
-.product .price
-{
+.product .price {
     font-weight: 900;
     color: var(--price-color);
 }
 
-.modal-body img
-{
-    width:100%;
+.modal-body img {
+    width: 100%;
 }
 
-.product > .add-button
-{
+.product > .add-button {
     display: flex;
 }
 
@@ -206,18 +193,15 @@ main > .content-form .cart-item
     background-color: #5a8cae;
 }
 
-.visible
-{
+.visible {
     display: block;
 }
 
-.hidden
-{
+.hidden {
     display: none !important;
 }
 
-.modal
-{
+.modal {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -229,8 +213,7 @@ main > .content-form .cart-item
     padding: 30px;
 }
 
-.modal-dialog
-{
+.modal-dialog {
     width: 50vw;
     background-color: var(--card-bg);
     border-radius: 8px;
@@ -250,8 +233,7 @@ main > .content-form .cart-item
     border-top: 1px solid var(--border-color);
 }
 
-#errors
-{
+#errors {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -261,12 +243,11 @@ main > .content-form .cart-item
     opacity: 90%;
 }
 
-#errors > div{
+#errors > div {
     width: 33vw;
 }
 
-.alert
-{
+.alert {
     margin-bottom: 2px !important;
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
