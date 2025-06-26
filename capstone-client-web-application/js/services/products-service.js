@@ -97,11 +97,16 @@ class ProductService {
                  data.products = response.data;
 
                  data.products.forEach(product => {
-                     if(!this.hasPhoto(product.imageUrl))
-                     {
-                         product.imageUrl = "no-image.jpg";
+                     if (!this.hasPhoto(product.imageUrl)) {
+                         if (product.name && product.name.includes("Smart Home Hub")) { product.imageUrl = "smart-home.png"; }
+                         if (product.name && product.name.includes("Portable Charger")) { product.imageUrl = "portable-charger.png"; }
+                         if (product.name && product.name.includes("Men's Swim Trunks")) { product.imageUrl = "mens-swim-trunks.png"; }
+                         if (product.name && product.name.includes("Men's Casual Shirt")) { product.imageUrl = "mens-casual-shirt.png"; }
+                         if (product.name && product.name.includes("Women's Jumpsuit")) { product.imageUrl = "womens-jumpsuit.png"; }
+                         if (product.name && product.name.includes("Women's Swimwear")) { product.imageUrl = "womens-swimwear.png"; }
+                         if (product.name && product.name.includes("Air Fryer")) { product.imageUrl = "air-fryer.png"; }
                      }
-                 })
+                 });
 
                  templateBuilder.build('product', data, 'content', this.enableButtons);
 
