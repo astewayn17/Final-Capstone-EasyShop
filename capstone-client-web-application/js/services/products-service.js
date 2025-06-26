@@ -105,6 +105,8 @@ class ProductService {
                          if (product.name && product.name.includes("Women's Jumpsuit")) { product.imageUrl = "womens-jumpsuit.png"; }
                          if (product.name && product.name.includes("Women's Swimwear")) { product.imageUrl = "womens-swimwear.png"; }
                          if (product.name && product.name.includes("Air Fryer")) { product.imageUrl = "air-fryer.png"; }
+                         if (product.name && product.name.includes("Cookies")) { product.imageUrl = "cookies.png"; }
+                         if (product.name && product.name.includes("Grandma Cookies")) { product.imageUrl = "grandma-cookies.png"; }
                      }
                  });
 
