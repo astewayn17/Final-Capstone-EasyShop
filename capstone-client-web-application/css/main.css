@@ -1,14 +1,31 @@
+/* Dark blue color scheme */
+:root {
+    --primary-bg: #0a0e27;
+    --secondary-bg: #111b3c;
+    --card-bg: #1a2547;
+    --border-color: #2a3f5f;
+    --text-primary: #e8eaf0;
+    --text-secondary: #b8c1d6;
+    --accent-color: #4a7c9e;
+    --price-color: #ff9b6e;
+    --shadow-color: #05081a;
+}
+
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+}
+
 header
 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     height: 10vh;
-
     padding: 5px 15px;
-    border-bottom: solid 1px #555;
-    box-shadow: 5px 2px #eee;
+    background-color: var(--secondary-bg);
+    border-bottom: solid 1px var(--border-color);
+    box-shadow: 0 2px 5px var(--shadow-color);
 }
 
 header img
@@ -30,12 +47,22 @@ header #links
     padding-right: 20px;
 }
 
+header #links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+header #links a:hover {
+    color: var(--text-primary);
+}
+
 header .cart
 {
     font-size: x-large;
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
+    color: var(--text-primary);
 }
 
 header .cart #cart-items
@@ -58,10 +85,12 @@ main > .filter-box
 {
     width: 350px;
     padding: 15px;
+    background-color: var(--secondary-bg);
+    border-right: solid 1px var(--border-color);
 }
 
 main #min-price .slider-selection {
-    background: #BABABA;
+    background: var(--accent-color);
 }
 
 main > .content
@@ -71,6 +100,7 @@ main > .content
     width: 100%;
     height: 87vh;
     overflow: scroll;
+    background-color: var(--primary-bg);
 }
 
 main > .content-form
@@ -78,12 +108,13 @@ main > .content-form
     display: flex;
     flex-direction: column;
     padding-right: 20px;
+    background-color: var(--primary-bg);
 }
 
 main > .content-form .cart-header,
 main > .content-form .cart-item
 {
-    border-bottom: solid 1px #ccc;
+    border-bottom: solid 1px var(--border-color);
 }
 
 .content-form .photo
@@ -96,7 +127,7 @@ main > .content-form .cart-item
 {
     width: 100px;
     cursor: pointer;
-    border: solid 1px #ccc;
+    border: solid 1px var(--border-color);
 }
 
 .content-form .cart-header
@@ -104,43 +135,51 @@ main > .content-form .cart-item
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: var(--text-primary);
 }
 
 .content-form .cart-total
 {
     margin: 10px 0;
-    color: maroon;
+    color: var(--price-color);
 }
 
 .product
 {
     display: flex;
     flex-direction: column;
-
     justify-content: space-between;
-    /*width: 30%;*/
-    border: solid 1px #ccc;
+    background-color: var(--card-bg);
+    border: solid 1px var(--border-color);
     padding: 5px;
     border-radius: 5px;
     margin: 5px;
+    color: var(--text-primary);
 }
+
+.product:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(74, 124, 158, 0.3);
+}
+
 .product  .photo
 {
     display: flex;
     justify-content: space-between;
     padding: 0 10px 10px 10px;
 }
+
 .product  .photo > img
 {
     width: 33%;
     cursor: pointer;
-    border: solid 1px #ccc;
+    border: solid 1px var(--border-color);
 }
 
 .product .price
 {
     font-weight: 900;
-    color: #924a24;
+    color: var(--price-color);
 }
 
 .modal-body img
@@ -151,6 +190,20 @@ main > .content-form .cart-item
 .product > .add-button
 {
     display: flex;
+}
+
+.product > .add-button button {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.product > .add-button button:hover {
+    background-color: #5a8cae;
 }
 
 .visible
@@ -169,7 +222,7 @@ main > .content-form .cart-item
     justify-content: center;
     position: absolute;
     top: 0;
-    background-color: #777777aa;
+    background-color: rgba(10, 14, 39, 0.9);
     width: 100vw;
     height: 100vh;
     z-index: 1000;
@@ -179,6 +232,22 @@ main > .content-form .cart-item
 .modal-dialog
 {
     width: 50vw;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: solid 1px var(--border-color);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
 }
 
 #errors
@@ -191,6 +260,7 @@ main > .content-form .cart-item
     padding-top: 5px;
     opacity: 90%;
 }
+
 #errors > div{
     width: 33vw;
 }
@@ -198,5 +268,75 @@ main > .content-form .cart-item
 .alert
 {
     margin-bottom: 2px !important;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
 
+/* Form inputs and controls */
+input, select, textarea {
+    background-color: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(74, 124, 158, 0.2);
+}
+
+/* Buttons */
+.btn {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    border: none;
+}
+
+.btn:hover {
+    background-color: #5a8cae;
+}
+
+/* Labels */
+label {
+    color: var(--text-secondary);
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+/* === Dark-mode form controls === */
+.form-control,
+.form-select,
+input.form-control,
+select.form-control,
+textarea.form-control {
+  background-color: var(--secondary-bg);
+  color:            var(--text-primary);
+  border:           1px solid var(--border-color);
+  border-radius:    4px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow:   0 0 0 2px rgba(74, 124, 158, 0.2);
+}

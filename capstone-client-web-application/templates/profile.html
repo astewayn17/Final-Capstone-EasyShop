@@ -1,41 +1,81 @@
-
+<!-- Make sure bootstrap.min.css is loaded before main.css in your <head> -->
 <div class="filter-box">
   &nbsp;
-
 </div>
+
 <div id="content" class="content-form">
   <h1>Profile</h1>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="firstName" value='{{firstName}}'>
-    <label for="firstName">First Name</label>
+
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            value="{{firstName}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="lastName" value='{{lastName}}'>
-    <label for="lastName">Last Name</label>
+
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            value="{{lastName}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="phone" value='{{phone}}'>
-    <label for="phone">Phone</label>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input
+            type="text"
+            id="phone"
+            class="form-control"
+            value="{{phone}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="email" value='{{email}}'>
-    <label for="email">Email</label>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+            type="email"
+            id="email"
+            class="form-control"
+            value="{{email}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="address" value='{{address}}'>
-    <label for="address">Address</label>
+
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input
+            type="text"
+            id="address"
+            class="form-control"
+            value="{{address}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="city" value='{{city}}'>
-    <label for="city">City</label>
+
+  <div class="mb-3">
+    <label for="city" class="form-label">City</label>
+    <input
+            type="text"
+            id="city"
+            class="form-control"
+            value="{{city}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="state" value='{{state}}'>
-    <label for="state">State</label>
+
+  <div class="mb-3">
+    <label for="state" class="form-label">State</label>
+    <input
+            type="text"
+            id="state"
+            class="form-control"
+            value="{{state}}">
   </div>
-  <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="zip" value='{{zip}}'>
-    <label for="zip">Zip</label>
+
+  <div class="mb-3">
+    <label for="zip" class="form-label">Zip</label>
+    <input
+            type="text"
+            id="zip"
+            class="form-control"
+            value="{{zip}}">
   </div>
 
   <button class="btn btn-outline-danger" onclick="saveProfile()">Update</button>
