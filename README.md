@@ -87,11 +87,11 @@ Unit Tests have been implemented in the following classes
 <table>
   <tr>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/Bread-n-Bytes/blob/main/Screenshots/add_sandwich.png" width="500"/><br/>
+      <img src="https://github.com/astewayn17/Final-Capstone-EasyShop/blob/main/screenshots/home-screen-signed-out.png" width="500"/><br/>
       <sub><i>Home Screen</i></sub>
     </td>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/Bread-n-Bytes/blob/main/Screenshots/bread_type.png" width="500"/><br/>
+      <img src="https://github.com/astewayn17/Final-Capstone-EasyShop/blob/main/screenshots/logging-in.png" width="500"/><br/>
       <sub><i>Logging In</i></sub>
     </td>
   </tr>
@@ -100,11 +100,11 @@ Unit Tests have been implemented in the following classes
 <table>
   <tr>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/Bread-n-Bytes/blob/main/Screenshots/add_sandwich.png" width="500"/><br/>
+      <img src="https://github.com/astewayn17/Final-Capstone-EasyShop/blob/main/screenshots/cart.png" width="500"/><br/>
       <sub><i>Shopping Cart</i></sub>
     </td>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/Bread-n-Bytes/blob/main/Screenshots/bread_type.png" width="500"/><br/>
+      <img src="https://github.com/astewayn17/Final-Capstone-EasyShop/blob/main/screenshots/profile.png" width="500"/><br/>
       <sub><i>User Profile</i></sub>
     </td>
   </tr>
@@ -169,4 +169,10 @@ search()
 ---
 
 ## 📄 Credits
-Claude model Opus 4 for assistance with front end customizations relating to the dark blue color theme.
+Front-end customization related to the dark blue color theme was supported by Anthropic’s Claude Opus 4 (2025).
+Product image generation was assisted by OpenAI’s ChatGPT-4o (2025).
+
+## 📚 References
+Anthropic. (2025). Claude Opus 4 [Large language model]. Anthropic. https://www.anthropic.com
+OpenAI. (2025). ChatGPT-4o [Multimodal language model]. OpenAI. https://openai.com/chatgpt
+
